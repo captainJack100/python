@@ -15,20 +15,24 @@ class Counter:
         if (self.total > 10):
             self.threshReached()
     def threshReached(self):
-        self.events.on_change()
+        self.events.on_change(self.total)
+
+    def addCallBack(self, fn):
+        self.events.on_change += fn
 
 class Program:
-    def __init__(self):
+    def __init__(self, valueAmount):
         c = Counter()
-        c.events.on_change += self.doSomething
-        c.add(100)
+        c.addCallBack(self.doSomething)
+        c.add(valueAmount)
 
-    def doSomething(self):
-        print "DO SOMETHING"
+    def doSomething(self, total):
+        print "Function that is called back %s" % total
 
 def main():
-    p = Program()
-
+    p = Program(100)
+    p2 = Program(2)
+    
 if __name__ == "__main__":
     main()
 
