@@ -3,7 +3,6 @@ from fabric.api import *
 del env.hosts[:]
 env.passwords.clear()
 env.host_string = '127.0.0.1'
-running_hosts = {}
 
 for line in open('hosts.txt', 'r').readlines():
     host, passw = line.split()
@@ -24,8 +23,9 @@ def run_command(command):
 
 def check_hosts():
     for host, result in execute(run_command, "uptime", hosts=env.hosts).items():
-        if result != "Error":
-            running_hosts[host] = result
+        if result == "Error":
+            env.hosts.remove(host)
+            del env.passwords[host]
 
 def get_hosts():
     selected_hosts = []
@@ -35,16 +35,36 @@ def get_hosts():
 
 def get_shell():
     host = int(raw_input("Host: "))
-    execute(open_shell, host=env.hosts[host])   
+    try:
+        execute(open_shell, host=env.hosts[host])   
+    except:
+        print "HOST ERROR"
 
 def execute_cmd():
-    cmd = raw_input("Command: ")
-    for host, result in execute(run_command, cmd, hosts=get_hosts()).items():
-        print "[" + host + "]: " + cmd
-        print ('-' * 80) + '\n' + result + '\n'
+    try:
+        cmd = raw_input("Command: ")
+        for host, result in execute(run_command, cmd, hosts=get_hosts()).items():
+            print "[" + host + "]: " + cmd
+            print ('-' * 80) + '\n' + result + '\n'
+    except:
+        print "HOST ERROR"
+
+def put_file():
+    file_name = raw_input("Enter file: ")
+    execute(put, file_name, hosts=env.hosts)
 
 def list_hosts():
-    for count, host in enumerate(running_hosts):
-        print "%s. %s %s" % (count, host)
+    print ('-' * 80)
+    print "Running Hosts ..."
+    for count, host in enumerate(env.hosts):
+        print "%s. %s" % (count, host)
+    print ('-' * 80)
+
+def menu():
+    pass
+
+if __name__ == "__main__":
+    check_hosts()
+    menu()
 
 
