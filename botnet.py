@@ -51,7 +51,10 @@ def execute_cmd():
 
 def put_file():
     file_name = raw_input("Enter file: ")
-    execute(put, file_name, hosts=env.hosts)
+    try:
+        execute(put, file_name, hosts=get_hosts())
+    except:
+        print "HOST ERROR"
 
 def list_hosts():
     print ('-' * 80)
@@ -60,8 +63,29 @@ def list_hosts():
         print "%s. %s" % (count, host)
     print ('-' * 80)
 
+def options():
+    print "0: Exit"
+    print "1: List Options"
+    print "2: List Hosts"
+    print "3: Execute Command"
+    print "4: Get Shell"
+    print "5: Put File"
+    print "\n"
+    
 def menu():
-    pass
+    available_choices = {1: options, 2: list_hosts, 3: execute_cmd, 4: get_shell, 5: put_file}
+    options()
+
+    choice = int(raw_input("Choice: "))
+    
+    while (choice != 0):
+        if (choice not in available_choices.keys()):
+            print "Choice not Available. Try again!"
+            choice = int(raw_input("Choice: "))
+            continue     
+        
+        available_choices[choice]()
+        choice = int(raw_input("Choice: "))
 
 if __name__ == "__main__":
     check_hosts()
