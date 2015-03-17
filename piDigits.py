@@ -33,7 +33,7 @@ class piDigits(object):
         result = piDigits.scaledNumerator(1, denominator)
         squared = denominator*denominator
         
-        divisor = -1
+        divisor = 1
         term = result
        
         while(not term.IsZero()):
@@ -83,6 +83,6 @@ def unit_test():
 
     #piDigits.setPrecision(10)
     print piDigits.getPi(10)
-    print piDigits.Atan(5)
+
 if __name__ == "__main__":
     unit_test()
