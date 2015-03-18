@@ -1,4 +1,5 @@
 import math
+import time
 
 class piDigits(object):
     """ piDigits: calculates the digits of pi
@@ -26,11 +27,15 @@ class piDigits(object):
     @staticmethod
     def setPrecision(prec):
         piDigits.precision = prec
-        #piDigits.denom = math.pow(10, piDigits.precision + piDigits.slop)
-        tmp = 10
-        for x in xrange(piDigits.precision + piDigits.slop):
-            tmp *= 10
-        piDigits.denom = tmp
+        
+        #tmp = 10
+        #for x in xrange(piDigits.precision + piDigits.slop):
+        #    tmp *= 10
+        #piDigits.denom = tmp
+
+        lst = [0 for x in xrange(piDigits.precision + piDigits.slop)]
+        lst.insert(0,1)
+        piDigits.denom = int("".join(map(str, lst)))
 
     @staticmethod
     def Atan(denominator):
@@ -84,7 +89,13 @@ class piDigits(object):
         return strg 
 
 def unit_test():
+    start, end = (0,0)
+    
+    start = time.time()
     print piDigits.getPi(1000)
+    end = time.time()
+
+    print "time: ", end - start
 
 if __name__ == "__main__":
     unit_test()
