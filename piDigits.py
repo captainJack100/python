@@ -26,7 +26,11 @@ class piDigits(object):
     @staticmethod
     def setPrecision(prec):
         piDigits.precision = prec
-        piDigits.denom = math.pow(10, piDigits.precision + piDigits.slop)
+        #piDigits.denom = math.pow(10, piDigits.precision + piDigits.slop)
+        tmp = 10
+        for x in xrange(piDigits.precision + piDigits.slop):
+            tmp *= 10
+        piDigits.denom = tmp
 
     @staticmethod
     def Atan(denominator):
@@ -80,9 +84,7 @@ class piDigits(object):
         return strg 
 
 def unit_test():
-
-    #piDigits.setPrecision(10)
-    print piDigits.getPi(10)
+    print piDigits.getPi(1000)
 
 if __name__ == "__main__":
     unit_test()
