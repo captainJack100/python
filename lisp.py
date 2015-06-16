@@ -147,9 +147,9 @@ def test():
 	eval(parse(a))
 	print eval(parse(b))
 
- main():
-    repl() 
-	#test()
+def main():
+    #repl() 
+	test()
 
  __name__ == "__main__":
     main() 
