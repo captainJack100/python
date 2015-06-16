@@ -141,8 +141,15 @@ def eval(x, env=global_env):
 
 ############### standalone
 
-def main():
-    repl() 
+def test():
+	a = "(define circle-area (lambda (r) (* pi (* r r))))"
+	b = "(circle-area 10)"
+	eval(parse(a))
+	print eval(parse(b))
 
-if __name__ == "__main__":
+ main():
+    repl() 
+	#test()
+
+ __name__ == "__main__":
     main() 
